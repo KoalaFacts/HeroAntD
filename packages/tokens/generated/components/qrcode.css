@@ -1,0 +1,86 @@
+/* QRCode - .ant-qrcode */
+
+.ant-qrcode {
+  font-family: var(--ant-font-family);
+  font-size: var(--ant-font-size);
+  box-sizing: border-box;
+}
+
+.ant-qrcode::before,
+.ant-qrcode::after {
+  box-sizing: border-box;
+}
+
+.ant-qrcode [class^="ant-qrcode"],
+.ant-qrcode [class*=" ant-qrcode"] {
+  box-sizing: border-box;
+}
+
+.ant-qrcode [class^="ant-qrcode"]::before,
+.ant-qrcode [class*=" ant-qrcode"]::before,
+.ant-qrcode [class^="ant-qrcode"]::after,
+.ant-qrcode [class*=" ant-qrcode"]::after {
+  box-sizing: border-box;
+}
+
+.ant-qrcode {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--ant-padding-sm);
+  color: var(--ant-color-text);
+  font-size: var(--ant-font-size);
+  line-height: var(--ant-line-height);
+  list-style: none;
+  font-family: var(--ant-font-family);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--ant-color-white);
+  border-radius: var(--ant-border-radius-lg);
+  border: var(--ant-line-width) var(--ant-line-type) var(--ant-color-split);
+  position: relative;
+  overflow: hidden;
+}
+
+.ant-qrcode > .ant-qrcode-cover {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: var(--ant-color-text);
+  line-height: var(--ant-line-height);
+  background: var(--ant-qr-code-qr-code-cover-background-color);
+  text-align: center;
+}
+
+.ant-qrcode > .ant-qrcode-cover > .ant-qrcode-expired,
+.ant-qrcode > .ant-qrcode-cover > .ant-qrcode-scanned {
+  color: var(--ant-color-text);
+}
+
+.ant-qrcode > canvas {
+  align-self: stretch;
+  flex: auto;
+  min-width: 0;
+}
+
+.ant-qrcode-icon {
+  margin-block-end: var(--ant-margin-xs);
+  font-size: var(--ant-control-height);
+}
+
+.ant-qrcode-borderless {
+  border-color: transparent;
+  padding: 0;
+  border-radius: 0;
+}
+
+.ant-qrcode {
+  --ant-qr-code-qr-code-cover-background-color: rgba(255, 255, 255, 0.96);
+}

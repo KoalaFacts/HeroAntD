@@ -1,0 +1,41 @@
+{
+  "name": "@hero-antd/core",
+  "version": "6.0.1",
+  "description": "Web Components UI library for Ant Design V6",
+  "main": "dist/index.cjs.js",
+  "module": "dist/index.js",
+  "types": "dist/types/index.d.ts",
+  "collection": "dist/collection/collection-manifest.json",
+  "collection:main": "dist/collection/index.js",
+  "unpkg": "dist/hero-antd/hero-antd.esm.js",
+  "exports": {
+    ".": {
+      "import": "./dist/hero-antd/hero-antd.esm.js",
+      "require": "./dist/hero-antd/hero-antd.cjs.js"
+    },
+    "./loader": {
+      "import": "./loader/index.js",
+      "require": "./loader/index.cjs"
+    }
+  },
+  "files": [
+    "dist/",
+    "loader/"
+  ],
+  "scripts": {
+    "dev": "stencil build --dev --watch --serve",
+    "build": "stencil build",
+    "test": "stencil test --spec",
+    "test:watch": "stencil test --spec --watchAll",
+    "test:e2e": "stencil test --e2e",
+    "generate": "stencil generate",
+    "lint": "eslint src/**/*.{ts,tsx}"
+  },
+  "dependencies": {
+    "@hero-antd/tokens": "workspace:*"
+  },
+  "devDependencies": {
+    "@stencil/core": "^4.41.0"
+  },
+  "license": "MIT"
+}

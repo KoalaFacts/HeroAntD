@@ -1,0 +1,19 @@
+{
+  "name": "@hero-antd/docs",
+  "version": "0.0.1",
+  "private": true,
+  "description": "Documentation and demo site for Hero AntD",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/**/*.{ts,tsx}"
+  },
+  "dependencies": {
+    "@hero-antd/core": "workspace:*"
+  },
+  "devDependencies": {
+    "vite": "^8.0.0-beta.5"
+  },
+  "license": "MIT"
+}

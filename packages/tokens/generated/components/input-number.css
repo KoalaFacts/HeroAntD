@@ -1,0 +1,898 @@
+/* InputNumber - .ant-input-number */
+
+.ant-color-picker .ant-color-picker-inner
+  .ant-color-picker-input-container
+  .ant-color-picker-steppers.ant-input-number {
+  font-size: var(--ant-font-size-sm);
+  line-height: var(--ant-line-height-sm);
+  padding: 0;
+}
+
+.ant-color-picker
+  .ant-color-picker-inner
+  .ant-color-picker-input-container
+  .ant-color-picker-steppers.ant-input-number
+  .ant-input-number-input {
+  padding-inline-start: var(--ant-padding-xxs);
+  padding-inline-end: 0;
+}
+
+.ant-color-picker
+  .ant-color-picker-inner
+  .ant-color-picker-input-container
+  .ant-color-picker-steppers.ant-input-number
+  .ant-input-number-handler-wrap {
+  width: 16px;
+}
+
+.ant-input-group.ant-input-group-compact > .ant-input-affix-wrapper,
+.ant-input-group.ant-input-group-compact > .ant-input-number-affix-wrapper,
+.ant-input-group.ant-input-group-compact > .ant-picker-range {
+  display: inline-flex;
+}
+
+.ant-input-number-css-var {
+  box-sizing: border-box;
+}
+
+.ant-input-number-css-var::before,
+.ant-input-number-css-var::after {
+  box-sizing: border-box;
+}
+
+.ant-input-number-css-var [class^="ant-input-number"],
+.ant-input-number-css-var [class*=" ant-input-number"] {
+  box-sizing: border-box;
+}
+
+.ant-input-number-css-var [class^="ant-input-number"]::before,
+.ant-input-number-css-var [class*=" ant-input-number"]::before,
+.ant-input-number-css-var [class^="ant-input-number"]::after,
+.ant-input-number-css-var [class*=" ant-input-number"]::after {
+  box-sizing: border-box;
+}
+
+.ant-input-number {
+  box-sizing: border-box;
+  margin: 0;
+  padding: var(--ant-input-number-padding-block)
+    var(--ant-input-number-padding-inline);
+  color: var(--ant-color-text);
+  font-size: var(--ant-input-number-input-font-size);
+  line-height: var(--ant-line-height);
+  list-style: none;
+  font-family: var(--ant-font-family);
+  position: relative;
+  display: inline-flex;
+  width: var(--ant-input-number-control-width);
+  min-width: 0;
+  border-radius: var(--ant-border-radius);
+  transition: all var(--ant-motion-duration-mid);
+  --input-number-input-padding-block: var(--ant-input-number-padding-block);
+  --input-number-input-padding-inline: var(--ant-input-number-padding-inline);
+  padding-block: 0;
+}
+
+.ant-input-number::-moz-placeholder {
+  opacity: 1;
+}
+
+.ant-input-number::placeholder {
+  color: var(--ant-color-text-placeholder);
+  user-select: none;
+}
+
+.ant-input-number:placeholder-shown {
+  text-overflow: ellipsis;
+}
+
+.ant-input-number-lg {
+  padding: var(--ant-input-number-padding-block-lg)
+    var(--ant-input-number-padding-inline-lg);
+  font-size: var(--ant-input-number-input-font-size-lg);
+  line-height: var(--ant-line-height-lg);
+  border-radius: var(--ant-border-radius-lg);
+}
+
+.ant-input-number-sm {
+  padding: var(--ant-input-number-padding-block-sm)
+    var(--ant-input-number-padding-inline-sm);
+  font-size: var(--ant-input-number-input-font-size-sm);
+  border-radius: var(--ant-border-radius-sm);
+}
+
+.ant-input-number-rtl,
+.ant-input-number-textarea-rtl {
+  direction: rtl;
+}
+
+.ant-input-number-outlined {
+  background: var(--ant-color-bg-container);
+  border-width: var(--ant-line-width);
+  border-style: var(--ant-line-type);
+  border-color: var(--ant-color-border);
+}
+
+.ant-input-number-outlined:hover {
+  border-color: var(--ant-input-number-hover-border-color);
+  background-color: var(--ant-input-number-hover-bg);
+}
+
+.ant-input-number-outlined:focus,
+.ant-input-number-outlined:focus-within {
+  border-color: var(--ant-input-number-active-border-color);
+  box-shadow: var(--ant-input-number-active-shadow);
+  outline: 0;
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-outlined.ant-input-number-disabled,
+.ant-input-number-outlined[disabled] {
+  color: var(--ant-color-text-disabled);
+  background-color: var(--ant-color-bg-container-disabled);
+  border-color: var(--ant-color-border);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.ant-input-number-outlined.ant-input-number-disabled input[disabled],
+.ant-input-number-outlined[disabled] input[disabled],
+.ant-input-number-outlined.ant-input-number-disabled textarea[disabled],
+.ant-input-number-outlined[disabled] textarea[disabled] {
+  cursor: not-allowed;
+}
+
+.ant-input-number-outlined.ant-input-number-disabled:hover:not([disabled]),
+.ant-input-number-outlined[disabled]:hover:not([disabled]) {
+  border-color: var(--ant-color-border);
+  background-color: var(--ant-color-bg-container-disabled);
+}
+
+.ant-input-number-outlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ) {
+  background: var(--ant-color-bg-container);
+  border-width: var(--ant-line-width);
+  border-style: var(--ant-line-type);
+  border-color: var(--ant-color-error);
+}
+
+.ant-input-number-outlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):hover {
+  border-color: var(--ant-color-error-border-hover);
+  background-color: var(--ant-input-number-hover-bg);
+}
+
+.ant-input-number-outlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):focus,
+.ant-input-number-outlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):focus-within {
+  border-color: var(--ant-color-error);
+  box-shadow: var(--ant-input-number-error-active-shadow);
+  outline: 0;
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-outlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-prefix,
+.ant-input-number-outlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-suffix {
+  color: var(--ant-color-error);
+}
+
+.ant-input-number-outlined.ant-input-number-status-error.ant-input-number-disabled {
+  border-color: var(--ant-color-error);
+}
+
+.ant-input-number-outlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ) {
+  background: var(--ant-color-bg-container);
+  border-width: var(--ant-line-width);
+  border-style: var(--ant-line-type);
+  border-color: var(--ant-color-warning);
+}
+
+.ant-input-number-outlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):hover {
+  border-color: var(--ant-color-warning-border-hover);
+  background-color: var(--ant-input-number-hover-bg);
+}
+
+.ant-input-number-outlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):focus,
+.ant-input-number-outlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):focus-within {
+  border-color: var(--ant-color-warning);
+  box-shadow: var(--ant-input-number-warning-active-shadow);
+  outline: 0;
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-outlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-prefix,
+.ant-input-number-outlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-suffix {
+  color: var(--ant-color-warning);
+}
+
+.ant-input-number-outlined.ant-input-number-status-warning.ant-input-number-disabled {
+  border-color: var(--ant-color-warning);
+}
+
+.ant-input-number-outlined .ant-input-number-actions {
+  background: var(--ant-input-number-handle-bg);
+}
+
+.ant-input-number-outlined
+  .ant-input-number-actions
+  .ant-input-number-action-down {
+  border-block-start: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-input-number-handle-border-color);
+}
+
+.ant-input-number-filled {
+  background: var(--ant-color-fill-tertiary);
+  border-width: var(--ant-line-width);
+  border-style: var(--ant-line-type);
+  border-color: transparent;
+}
+
+input.ant-input-number-filled,
+.ant-input-number-filled input,
+textarea.ant-input-number-filled,
+.ant-input-number-filled textarea {
+  color: var(--ant-color-text);
+}
+
+.ant-input-number-filled:hover {
+  background: var(--ant-color-fill-secondary);
+}
+
+.ant-input-number-filled:focus,
+.ant-input-number-filled:focus-within {
+  outline: 0;
+  border-color: var(--ant-input-number-active-border-color);
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-filled.ant-input-number-disabled,
+.ant-input-number-filled[disabled] {
+  color: var(--ant-color-text-disabled);
+  background-color: var(--ant-color-bg-container-disabled);
+  border-color: var(--ant-color-border);
+  box-shadow: none;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.ant-input-number-filled.ant-input-number-disabled input[disabled],
+.ant-input-number-filled[disabled] input[disabled],
+.ant-input-number-filled.ant-input-number-disabled textarea[disabled],
+.ant-input-number-filled[disabled] textarea[disabled] {
+  cursor: not-allowed;
+}
+
+.ant-input-number-filled.ant-input-number-disabled:hover:not([disabled]),
+.ant-input-number-filled[disabled]:hover:not([disabled]) {
+  border-color: var(--ant-color-border);
+  background-color: var(--ant-color-bg-container-disabled);
+}
+
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ) {
+  background: var(--ant-color-error-bg);
+  border-width: var(--ant-line-width);
+  border-style: var(--ant-line-type);
+  border-color: transparent;
+}
+
+input.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ),
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  input,
+textarea.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ),
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  textarea {
+  color: var(--ant-color-error-text);
+}
+
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):hover {
+  background: var(--ant-color-error-bg-hover);
+}
+
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):focus,
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):focus-within {
+  outline: 0;
+  border-color: var(--ant-color-error);
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-prefix,
+.ant-input-number-filled.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-suffix {
+  color: var(--ant-color-error);
+}
+
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ) {
+  background: var(--ant-color-warning-bg);
+  border-width: var(--ant-line-width);
+  border-style: var(--ant-line-type);
+  border-color: transparent;
+}
+
+input.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ),
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  input,
+textarea.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ),
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  textarea {
+  color: var(--ant-color-warning-text);
+}
+
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):hover {
+  background: var(--ant-color-warning-bg-hover);
+}
+
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):focus,
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):focus-within {
+  outline: 0;
+  border-color: var(--ant-color-warning);
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-prefix,
+.ant-input-number-filled.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-suffix {
+  color: var(--ant-color-warning);
+}
+
+.ant-input-number-filled .ant-input-number-actions {
+  background: var(--ant-input-number-filled-handle-bg);
+}
+
+.ant-input-number-filled
+  .ant-input-number-actions
+  .ant-input-number-action-down {
+  border-block-start: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-input-number-handle-border-color);
+}
+
+.ant-input-number-filled:focus-within .ant-input-number-actions {
+  background: var(--ant-input-number-handle-bg);
+}
+
+.ant-input-number-underlined {
+  background: var(--ant-color-bg-container);
+  border-width: var(--ant-line-width) 0;
+  border-style: var(--ant-line-type) none;
+  border-color: transparent transparent var(--ant-color-border) transparent;
+  border-radius: 0;
+}
+
+.ant-input-number-underlined:hover {
+  border-color: transparent transparent
+    var(--ant-input-number-hover-border-color) transparent;
+  background-color: var(--ant-input-number-hover-bg);
+}
+
+.ant-input-number-underlined:focus,
+.ant-input-number-underlined:focus-within {
+  border-color: transparent transparent
+    var(--ant-input-number-active-border-color) transparent;
+  outline: 0;
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-underlined.ant-input-number-disabled,
+.ant-input-number-underlined[disabled] {
+  color: var(--ant-color-text-disabled);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.ant-input-number-underlined.ant-input-number-disabled:hover,
+.ant-input-number-underlined[disabled]:hover {
+  border-color: transparent transparent var(--ant-color-border) transparent;
+}
+
+.ant-input-number-underlined input[disabled],
+.ant-input-number-underlined textarea[disabled] {
+  cursor: not-allowed;
+}
+
+.ant-input-number-underlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ) {
+  background: var(--ant-color-bg-container);
+  border-width: var(--ant-line-width) 0;
+  border-style: var(--ant-line-type) none;
+  border-color: transparent transparent var(--ant-color-error) transparent;
+  border-radius: 0;
+}
+
+.ant-input-number-underlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):hover {
+  border-color: transparent transparent var(--ant-color-error-border-hover)
+    transparent;
+  background-color: var(--ant-input-number-hover-bg);
+}
+
+.ant-input-number-underlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):focus,
+.ant-input-number-underlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  ):focus-within {
+  border-color: transparent transparent var(--ant-color-error) transparent;
+  outline: 0;
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-underlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-prefix,
+.ant-input-number-underlined.ant-input-number-status-error:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-suffix {
+  color: var(--ant-color-error);
+}
+
+.ant-input-number-underlined.ant-input-number-status-error.ant-input-number-disabled {
+  border-color: transparent transparent var(--ant-color-error) transparent;
+}
+
+.ant-input-number-underlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ) {
+  background: var(--ant-color-bg-container);
+  border-width: var(--ant-line-width) 0;
+  border-style: var(--ant-line-type) none;
+  border-color: transparent transparent var(--ant-color-warning) transparent;
+  border-radius: 0;
+}
+
+.ant-input-number-underlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):hover {
+  border-color: transparent transparent var(--ant-color-warning-border-hover)
+    transparent;
+  background-color: var(--ant-input-number-hover-bg);
+}
+
+.ant-input-number-underlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):focus,
+.ant-input-number-underlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  ):focus-within {
+  border-color: transparent transparent var(--ant-color-warning) transparent;
+  outline: 0;
+  background-color: var(--ant-input-number-active-bg);
+}
+
+.ant-input-number-underlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-prefix,
+.ant-input-number-underlined.ant-input-number-status-warning:not(
+    .ant-input-number-disabled
+  )
+  .ant-input-number-suffix {
+  color: var(--ant-color-warning);
+}
+
+.ant-input-number-underlined.ant-input-number-status-warning.ant-input-number-disabled {
+  border-color: transparent transparent var(--ant-color-warning) transparent;
+}
+
+.ant-input-number-underlined .ant-input-number-actions {
+  background: var(--ant-input-number-handle-bg);
+}
+
+.ant-input-number-underlined
+  .ant-input-number-actions
+  .ant-input-number-action-down {
+  border-block-start: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-input-number-handle-border-color);
+}
+
+.ant-input-number-borderless {
+  background: transparent;
+  border: none;
+}
+
+.ant-input-number-borderless:focus,
+.ant-input-number-borderless:focus-within {
+  outline: none;
+}
+
+.ant-input-number-borderless.ant-input-number-disabled,
+.ant-input-number-borderless[disabled] {
+  color: var(--ant-color-text-disabled);
+  cursor: not-allowed;
+}
+
+.ant-input-number-borderless.ant-input-number-status-error,
+.ant-input-number-borderless.ant-input-number-status-error input,
+.ant-input-number-borderless.ant-input-number-status-error textarea {
+  color: var(--ant-color-error);
+}
+
+.ant-input-number-borderless.ant-input-number-status-warning,
+.ant-input-number-borderless.ant-input-number-status-warning input,
+.ant-input-number-borderless.ant-input-number-status-warning textarea {
+  color: var(--ant-color-warning);
+}
+
+.ant-input-number-rtl {
+  direction: rtl;
+}
+
+.ant-input-number-rtl .ant-input-number-input {
+  direction: rtl;
+}
+
+.ant-input-number.ant-input-number-out-of-range .ant-input-number-input {
+  color: var(--ant-color-error);
+}
+
+.ant-input-number .ant-input-number-input {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--ant-color-text);
+  font-size: inherit;
+  line-height: inherit;
+  list-style: none;
+  font-family: var(--ant-font-family);
+  width: 100%;
+  padding-block: var(--input-number-input-padding-block);
+  text-align: start;
+  background-color: transparent;
+  border: 0;
+  border-radius: var(--ant-border-radius);
+  outline: 0;
+  transition: all var(--ant-motion-duration-mid) linear;
+  appearance: textfield;
+}
+
+.ant-input-number .ant-input-number-input::-moz-placeholder {
+  opacity: 1;
+}
+
+.ant-input-number .ant-input-number-input::placeholder {
+  color: var(--ant-color-text-placeholder);
+  user-select: none;
+}
+
+.ant-input-number .ant-input-number-input:placeholder-shown {
+  text-overflow: ellipsis;
+}
+
+.ant-input-number
+  .ant-input-number-input[type="number"]::-webkit-inner-spin-button,
+.ant-input-number
+  .ant-input-number-input[type="number"]::-webkit-outer-spin-button {
+  margin: 0;
+  appearance: none;
+}
+
+.ant-input-number:hover .ant-input-number-handler-wrap,
+.ant-input-number-focused .ant-input-number-handler-wrap {
+  width: var(--ant-input-number-handle-width);
+  opacity: 1;
+}
+
+.ant-input-number-disabled .ant-input-number-input {
+  cursor: not-allowed;
+  color: var(--ant-color-text-disabled);
+}
+
+.ant-input-number .ant-input-number-action-up-disabled,
+.ant-input-number .ant-input-number-action-down-disabled {
+  cursor: not-allowed;
+}
+
+.ant-input-number .ant-input-number-action {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  user-select: none;
+  overflow: hidden;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all var(--ant-motion-duration-mid) linear;
+}
+
+.ant-input-number .ant-input-number-action > * {
+  line-height: 1;
+}
+
+.ant-input-number .ant-input-number-action svg {
+  display: inline-block;
+}
+
+.ant-input-number .ant-input-number-action:active {
+  background: var(--ant-input-number-handle-active-bg);
+}
+
+.ant-input-number .ant-input-number-action:hover {
+  color: var(--ant-input-number-handle-hover-color);
+}
+
+.ant-input-number-mode-input {
+  overflow: hidden;
+}
+
+.ant-input-number-mode-input .ant-input-number-actions {
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  width: var(--ant-input-number-handle-visible-width);
+  opacity: var(--ant-input-number-handle-opacity);
+  height: 100%;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  transition: all var(--ant-motion-duration-mid);
+  overflow: hidden;
+}
+
+.ant-input-number-mode-input
+  .ant-input-number-actions
+  .ant-input-number-action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: auto;
+  height: 40%;
+  margin-inline-end: 0;
+  font-size: var(--ant-input-number-handle-font-size);
+}
+
+.ant-input-number-mode-input:hover .ant-input-number-actions,
+.ant-input-number-mode-input-focused .ant-input-number-actions {
+  width: var(--ant-input-number-handle-width);
+  opacity: 1;
+}
+
+.ant-input-number-mode-input .ant-input-number-action {
+  color: var(--ant-color-icon);
+  height: 50%;
+  border-inline-start: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-input-number-handle-border-color);
+}
+
+.ant-input-number-mode-input .ant-input-number-action:hover {
+  height: 60%;
+}
+
+.ant-input-number-mode-input.ant-input-number-disabled
+  .ant-input-number-actions,
+.ant-input-number-mode-input.ant-input-number-readonly
+  .ant-input-number-actions {
+  display: none;
+}
+
+.ant-input-number.ant-input-number-mode-spinner {
+  padding: 0;
+  width: auto;
+}
+
+.ant-input-number.ant-input-number-mode-spinner .ant-input-number-action {
+  flex: none;
+  padding-inline: var(--input-number-input-padding-inline);
+}
+
+.ant-input-number.ant-input-number-mode-spinner .ant-input-number-action-up {
+  border-inline-start: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-input-number-handle-border-color);
+}
+
+.ant-input-number.ant-input-number-mode-spinner .ant-input-number-action-down {
+  border-inline-end: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-input-number-handle-border-color);
+}
+
+.ant-input-number.ant-input-number-mode-spinner .ant-input-number-input {
+  text-align: center;
+  padding-inline: var(--input-number-input-padding-inline);
+}
+
+.ant-input-number-lg {
+  --input-number-input-padding-block: var(--ant-input-number-padding-block-lg);
+  --input-number-input-padding-inline: var(
+    --ant-input-number-padding-inline-lg
+  );
+  padding-block: 0;
+  font-size: var(--ant-input-number-input-font-size-lg);
+  line-height: var(--ant-line-height-lg);
+}
+
+.ant-input-number-sm {
+  --input-number-input-padding-block: var(--ant-input-number-padding-block-sm);
+  --input-number-input-padding-inline: var(
+    --ant-input-number-padding-inline-sm
+  );
+  padding-block: 0;
+  font-size: var(--ant-input-number-input-font-size-sm);
+  border-radius: var(--ant-border-radius-sm);
+}
+
+.ant-input-number .ant-input-number-prefix,
+.ant-input-number .ant-input-number-suffix {
+  display: flex;
+  flex: none;
+  align-items: center;
+  align-self: center;
+  pointer-events: none;
+}
+
+.ant-input-number .ant-input-number-prefix {
+  margin-inline-end: var(--ant-padding-xxs);
+}
+
+.ant-input-number .ant-input-number-suffix {
+  height: 100%;
+  margin-inline-start: var(--ant-padding-xxs);
+  transition: margin var(--ant-motion-duration-mid);
+}
+
+.ant-input-number:hover:not(.ant-input-number-without-controls)
+  .ant-input-number-suffix {
+  margin-inline-end: var(--ant-input-number-handle-width);
+}
+
+.ant-input-number-addon:has(.ant-select) {
+  border: 0;
+  padding: 0;
+}
+
+.ant-input-number-compact-item:not(.ant-input-number-compact-last-item) {
+  margin-inline-end: calc(var(--ant-line-width) * -1);
+}
+
+.ant-input-number-compact-item:not(.ant-input-number-status-success) {
+  z-index: 2;
+}
+
+.ant-input-number-compact-item:hover,
+.ant-input-number-compact-item:focus,
+.ant-input-number-compact-item:active {
+  z-index: 3;
+}
+
+.ant-input-number-compact-item[disabled] {
+  z-index: 0;
+}
+
+.ant-input-number-compact-item:not(.ant-input-number-compact-first-item):not(
+    .ant-input-number-compact-last-item
+  ) {
+  border-radius: 0;
+}
+
+.ant-input-number-compact-item:not(
+    .ant-input-number-compact-last-item
+  ).ant-input-number-compact-first-item,
+.ant-input-number-compact-item:not(
+    .ant-input-number-compact-last-item
+  ).ant-input-number-compact-first-item.ant-input-number-sm,
+.ant-input-number-compact-item:not(
+    .ant-input-number-compact-last-item
+  ).ant-input-number-compact-first-item.ant-input-number-lg {
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.ant-input-number-compact-item:not(
+    .ant-input-number-compact-first-item
+  ).ant-input-number-compact-last-item,
+.ant-input-number-compact-item:not(
+    .ant-input-number-compact-first-item
+  ).ant-input-number-compact-last-item.ant-input-number-sm,
+.ant-input-number-compact-item:not(
+    .ant-input-number-compact-first-item
+  ).ant-input-number-compact-last-item.ant-input-number-lg {
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.ant-input-number-css-var {
+  --ant-input-number-padding-block: 4px;
+  --ant-input-number-padding-block-sm: 0px;
+  --ant-input-number-padding-block-lg: 7px;
+  --ant-input-number-padding-inline: 11px;
+  --ant-input-number-padding-inline-sm: 7px;
+  --ant-input-number-padding-inline-lg: 11px;
+  --ant-input-number-addon-bg: rgba(0, 0, 0, 0.02);
+  --ant-input-number-active-border-color: #1677ff;
+  --ant-input-number-hover-border-color: #4096ff;
+  --ant-input-number-active-shadow: 0 0 0 2px rgba(5, 145, 255, 0.1);
+  --ant-input-number-error-active-shadow: 0 0 0 2px rgba(255, 38, 5, 0.06);
+  --ant-input-number-warning-active-shadow: 0 0 0 2px rgba(255, 215, 5, 0.1);
+  --ant-input-number-hover-bg: #ffffff;
+  --ant-input-number-active-bg: #ffffff;
+  --ant-input-number-input-font-size: 14px;
+  --ant-input-number-input-font-size-lg: 16px;
+  --ant-input-number-input-font-size-sm: 14px;
+  --ant-input-number-control-width: 90px;
+  --ant-input-number-handle-width: 22px;
+  --ant-input-number-handle-font-size: 7px;
+  --ant-input-number-handle-visible: auto;
+  --ant-input-number-handle-active-bg: rgba(0, 0, 0, 0.02);
+  --ant-input-number-handle-bg: #ffffff;
+  --ant-input-number-filled-handle-bg: #f0f0f0;
+  --ant-input-number-handle-hover-color: #1677ff;
+  --ant-input-number-handle-border-color: #d9d9d9;
+  --ant-input-number-handle-opacity: 0;
+  --ant-input-number-handle-visible-width: 0px;
+}

@@ -1,0 +1,65 @@
+/* Masonry - .ant-masonry */
+
+.ant-masonry-css-var {
+  font-family: var(--ant-font-family);
+  font-size: var(--ant-font-size);
+  box-sizing: border-box;
+}
+
+.ant-masonry-css-var::before,
+.ant-masonry-css-var::after {
+  box-sizing: border-box;
+}
+
+.ant-masonry-css-var [class^="ant-masonry"],
+.ant-masonry-css-var [class*=" ant-masonry"] {
+  box-sizing: border-box;
+}
+
+.ant-masonry-css-var [class^="ant-masonry"]::before,
+.ant-masonry-css-var [class*=" ant-masonry"]::before,
+.ant-masonry-css-var [class^="ant-masonry"]::after,
+.ant-masonry-css-var [class*=" ant-masonry"]::after {
+  box-sizing: border-box;
+}
+
+.ant-masonry {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.ant-masonry-rtl {
+  direction: rtl;
+}
+
+.ant-masonry > .ant-masonry-item {
+  box-sizing: border-box;
+}
+
+.ant-masonry > .ant-masonry-item-fade-appear {
+  transition: opacity var(--ant-motion-duration-slow) var(--ant-motion-ease-out);
+  opacity: 0;
+}
+
+.ant-masonry > .ant-masonry-item-fade-appear-active {
+  opacity: 1;
+}
+
+.ant-masonry > .ant-masonry-item-fade-leave {
+  transition: opacity var(--ant-motion-duration-fast) var(--ant-motion-ease-out);
+  opacity: 1;
+}
+
+.ant-masonry > .ant-masonry-item-fade-leave-active {
+  opacity: 0;
+}
+
+.ant-masonry > .ant-masonry-item:not(.ant-masonry-item-fade) {
+  transition:
+    left var(--ant-motion-duration-slow) var(--ant-motion-ease-out),
+    right var(--ant-motion-duration-slow) var(--ant-motion-ease-out),
+    top var(--ant-motion-duration-slow) var(--ant-motion-ease-out);
+}

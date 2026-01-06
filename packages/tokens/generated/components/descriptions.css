@@ -1,0 +1,285 @@
+/* Descriptions - .ant-descriptions */
+
+.ant-descriptions {
+  font-family: var(--ant-font-family);
+  font-size: var(--ant-font-size);
+  box-sizing: border-box;
+}
+
+.ant-descriptions::before,
+.ant-descriptions::after {
+  box-sizing: border-box;
+}
+
+.ant-descriptions [class^="ant-descriptions"],
+.ant-descriptions [class*=" ant-descriptions"] {
+  box-sizing: border-box;
+}
+
+.ant-descriptions [class^="ant-descriptions"]::before,
+.ant-descriptions [class*=" ant-descriptions"]::before,
+.ant-descriptions [class^="ant-descriptions"]::after,
+.ant-descriptions [class*=" ant-descriptions"]::after {
+  box-sizing: border-box;
+}
+
+.ant-descriptions {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--ant-color-text);
+  font-size: var(--ant-font-size);
+  line-height: var(--ant-line-height);
+  list-style: none;
+  font-family: var(--ant-font-family);
+}
+
+.ant-descriptions.ant-descriptions-bordered > .ant-descriptions-view {
+  border: var(--ant-line-width) var(--ant-line-type) var(--ant-color-split);
+}
+
+.ant-descriptions.ant-descriptions-bordered > .ant-descriptions-view > table {
+  table-layout: auto;
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row {
+  border-bottom: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-color-split);
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row:first-child
+  > th:first-child,
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row:first-child
+  > td:first-child {
+  border-start-start-radius: var(--ant-border-radius-lg);
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row:last-child {
+  border-bottom: none;
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row:last-child
+  > th:first-child,
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row:last-child
+  > td:first-child {
+  border-end-start-radius: var(--ant-border-radius-lg);
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row
+  > .ant-descriptions-item-label,
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row
+  > .ant-descriptions-item-content {
+  padding: var(--ant-padding) var(--ant-padding-lg);
+  border-inline-end: var(--ant-line-width) var(--ant-line-type)
+    var(--ant-color-split);
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row
+  > .ant-descriptions-item-label:last-child,
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row
+  > .ant-descriptions-item-content:last-child {
+  border-inline-end: none;
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row
+  > .ant-descriptions-item-label {
+  color: var(--ant-color-text-secondary);
+  background-color: var(--ant-descriptions-label-bg);
+}
+
+.ant-descriptions.ant-descriptions-bordered
+  > .ant-descriptions-view
+  .ant-descriptions-row
+  > .ant-descriptions-item-label::after {
+  display: none;
+}
+
+.ant-descriptions.ant-descriptions-bordered.ant-descriptions-middle
+  .ant-descriptions-row
+  > .ant-descriptions-item-label,
+.ant-descriptions.ant-descriptions-bordered.ant-descriptions-middle
+  .ant-descriptions-row
+  > .ant-descriptions-item-content {
+  padding: var(--ant-padding-sm) var(--ant-padding-lg);
+}
+
+.ant-descriptions.ant-descriptions-bordered.ant-descriptions-small
+  .ant-descriptions-row
+  > .ant-descriptions-item-label,
+.ant-descriptions.ant-descriptions-bordered.ant-descriptions-small
+  .ant-descriptions-row
+  > .ant-descriptions-item-content {
+  padding: var(--ant-padding-xs) var(--ant-padding);
+}
+
+.ant-descriptions-rtl {
+  direction: rtl;
+}
+
+.ant-descriptions .ant-descriptions-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: var(--ant-descriptions-title-margin-bottom);
+}
+
+.ant-descriptions .ant-descriptions-title {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  flex: auto;
+  color: var(--ant-descriptions-title-color);
+  font-weight: var(--ant-font-weight-strong);
+  font-size: var(--ant-font-size-lg);
+  line-height: var(--ant-line-height-lg);
+}
+
+.ant-descriptions .ant-descriptions-extra {
+  margin-inline-start: auto;
+  color: var(--ant-descriptions-extra-color);
+  font-size: var(--ant-font-size);
+}
+
+.ant-descriptions .ant-descriptions-view {
+  width: 100%;
+  border-radius: var(--ant-border-radius-lg);
+}
+
+.ant-descriptions .ant-descriptions-view table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.ant-descriptions .ant-descriptions-row > th,
+.ant-descriptions .ant-descriptions-row > td {
+  padding-bottom: var(--ant-descriptions-item-padding-bottom);
+  padding-inline-end: var(--ant-descriptions-item-padding-end);
+}
+
+.ant-descriptions .ant-descriptions-row > th:last-child,
+.ant-descriptions .ant-descriptions-row > td:last-child {
+  padding-inline-end: 0;
+}
+
+.ant-descriptions .ant-descriptions-row:last-child {
+  border-bottom: none;
+}
+
+.ant-descriptions .ant-descriptions-row:last-child > th,
+.ant-descriptions .ant-descriptions-row:last-child > td {
+  padding-bottom: 0;
+}
+
+.ant-descriptions .ant-descriptions-item-label {
+  color: var(--ant-descriptions-label-color);
+  font-weight: normal;
+  font-size: var(--ant-font-size);
+  line-height: var(--ant-line-height);
+  text-align: start;
+}
+
+.ant-descriptions .ant-descriptions-item-label::after {
+  content: ":";
+  position: relative;
+  top: -0.5px;
+  margin-inline: var(--ant-descriptions-colon-margin-left)
+    var(--ant-descriptions-colon-margin-right);
+}
+
+.ant-descriptions
+  .ant-descriptions-item-label.ant-descriptions-item-no-colon::after {
+  content: "";
+}
+
+.ant-descriptions .ant-descriptions-item-no-label::after {
+  margin: 0;
+  content: "";
+}
+
+.ant-descriptions .ant-descriptions-item-content {
+  display: table-cell;
+  flex: 1;
+  color: var(--ant-descriptions-content-color);
+  font-size: var(--ant-font-size);
+  line-height: var(--ant-line-height);
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+.ant-descriptions .ant-descriptions-item {
+  padding-bottom: 0;
+  vertical-align: top;
+}
+
+.ant-descriptions .ant-descriptions-item-container {
+  display: flex;
+}
+
+.ant-descriptions
+  .ant-descriptions-item-container
+  .ant-descriptions-item-label {
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.ant-descriptions
+  .ant-descriptions-item-container
+  .ant-descriptions-item-content {
+  display: inline-flex;
+  align-items: baseline;
+  min-width: 1em;
+}
+
+.ant-descriptions-middle .ant-descriptions-row > th,
+.ant-descriptions-middle .ant-descriptions-row > td {
+  padding-bottom: var(--ant-padding-sm);
+}
+
+.ant-descriptions-small .ant-descriptions-row > th,
+.ant-descriptions-small .ant-descriptions-row > td {
+  padding-bottom: var(--ant-padding-xs);
+}
+
+.ant-descriptions {
+  --ant-descriptions-label-bg: rgba(0, 0, 0, 0.02);
+  --ant-descriptions-label-color: rgba(0, 0, 0, 0.45);
+  --ant-descriptions-title-color: rgba(0, 0, 0, 0.88);
+  --ant-descriptions-title-margin-bottom: 20px;
+  --ant-descriptions-item-padding-bottom: 16px;
+  --ant-descriptions-item-padding-end: 16px;
+  --ant-descriptions-colon-margin-right: 8px;
+  --ant-descriptions-colon-margin-left: 2px;
+  --ant-descriptions-content-color: rgba(0, 0, 0, 0.88);
+  --ant-descriptions-extra-color: rgba(0, 0, 0, 0.88);
+}
+
+.ant-table-wrapper tr.ant-table-expanded-row .ant-descriptions-view {
+  display: flex;
+}
+
+.ant-table-wrapper tr.ant-table-expanded-row .ant-descriptions-view table {
+  flex: auto;
+  width: 100%;
+}

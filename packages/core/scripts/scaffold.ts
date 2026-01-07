@@ -2,15 +2,15 @@
 /**
  * Scaffold Script
  *
- * Scaffolds a new Web Component by extracting type definitions from React Ant Design.
- * Shows extracted types and .d.ts content for manual review.
+ * Creates a simple Web Component boilerplate from React Ant Design.
+ * Shows .d.ts content for reference - developer handles all implementation.
  *
  * Usage: bun run scaffold <component-name>
  * Example: bun run scaffold button
  */
 
-import { readFileSync, existsSync, readdirSync } from 'fs';
-import { join, dirname } from 'path';
+import { readFileSync, existsSync, readdirSync, mkdirSync, writeFileSync } from 'fs';
+import { join, dirname, relative } from 'path';
 
 const ANTD_PATH = join(dirname(import.meta.path), '../../tokens/node_modules/antd/es');
 const COMPONENTS_PATH = join(dirname(import.meta.path), '../src/components');
@@ -36,43 +36,83 @@ function capitalize(str: string): string {
 
 function getCssPrefix(componentName: string): string {
   const lower = componentName.toLowerCase();
-  if (CSS_PREFIX_MAP[lower]) {
-    return CSS_PREFIX_MAP[lower];
-  }
-  // Default: use component name as-is (lowercase)
-  return lower;
+  return CSS_PREFIX_MAP[lower] || lower;
 }
 
-function extractTypes(content: string): Map<string, string[]> {
-  const types = new Map<string, string[]>();
+function generateComponent(className: string, tagName: string, cssPrefix: string, dtsPath: string): string {
+  return `import { Component, Prop, Event, EventEmitter, Method, Element, h, Host } from '@stencil/core';
+import type { } from '@/types/shared';
 
-  // Pattern 1: const _ButtonTypes: readonly ["default", "primary", ...]
-  const constArrayRegex = /(?:export\s+)?(?:declare\s+)?const\s+_(\w+)s?:\s+readonly\s+\[([^\]]+)\]/g;
-  let match;
+// Reference: ${dtsPath}
 
-  while ((match = constArrayRegex.exec(content)) !== null) {
-    const typeName = capitalize(match[1]);
-    const values = match[2].match(/"([^"]+)"/g)?.map((v) => v.replace(/"/g, '')) || [];
-    if (values.length > 0) {
-      types.set(typeName, values);
-    }
+const cls = 'ant-${cssPrefix}';
+
+@Component({
+  tag: '${tagName}',
+  shadow: false,
+})
+export class ${className} {
+  @Element() el!: HTMLElement;
+
+  // ==========================================================================
+  // PROPS - Add from ${className}Props interface
+  // ==========================================================================
+
+  /** With default value (optional) */
+  @Prop() size: string = 'middle';
+
+  /** Optional prop (no default) */
+  @Prop() disabled?: boolean;
+
+  /** Required prop - must use { reflect: true } for attribute binding */
+  @Prop({ reflect: true }) type!: string;
+
+  // ==========================================================================
+  // EVENTS - For React on* callbacks
+  // Native events (click, focus, blur) work automatically.
+  // Custom events need @Event() declaration.
+  // ==========================================================================
+
+  @Event() close!: EventEmitter<void>;
+
+  private handleClick = () => {
+    this.close.emit();
+  };
+
+  // ==========================================================================
+  // METHODS - For imperative API (focus, blur, etc.)
+  // ==========================================================================
+
+  @Method()
+  async focus() {
+    this.el.querySelector<HTMLElement>('__ELEMENT__')?.focus();
   }
 
-  // Pattern 2: type ButtonType = 'default' | 'primary' | ...
-  const typeAliasRegex = /(?:export\s+)?type\s+(\w+)\s*=\s*\(typeof\s+_\w+\)\[number\]|(?:export\s+)?type\s+(\w+)\s*=\s*(['"][^'"]+['"](?:\s*\|\s*['"][^'"]+['"])*)/g;
+  // ==========================================================================
+  // RENDER
+  // ==========================================================================
 
-  while ((match = typeAliasRegex.exec(content)) !== null) {
-    if (match[2] && match[3]) {
-      // Direct string literal union
-      const typeName = match[2];
-      const values = match[3].match(/['"]([^'"]+)['"]/g)?.map((v) => v.replace(/['"]/g, '')) || [];
-      if (values.length > 0 && !types.has(typeName)) {
-        types.set(typeName, values);
-      }
-    }
+  private getClassString(): string {
+    return [
+      cls,
+      this.type && \`\${cls}-\${this.type}\`,
+      this.size && \`\${cls}-\${this.size}\`,
+      this.disabled && \`\${cls}-disabled\`,
+    ].filter(Boolean).join(' ');
   }
 
-  return types;
+  render() {
+    return (
+      <Host>
+        <__ELEMENT__ class={this.getClassString()} onClick={this.handleClick}>
+          {/* Named slots: <slot name="icon" /> */}
+          <slot />
+        </__ELEMENT__>
+      </Host>
+    );
+  }
+}
+`;
 }
 
 function listComponents() {
@@ -83,7 +123,6 @@ function listComponents() {
     .filter((d) => !d.startsWith('_') && !d.startsWith('.'))
     .sort();
 
-  // Print in columns
   const cols = 4;
   const rows = Math.ceil(dirs.length / cols);
   for (let i = 0; i < rows; i++) {
@@ -115,18 +154,15 @@ async function main() {
     process.exit(1);
   }
 
-  // Check if component already exists in our codebase
+  // Check if component already exists
   const existingComponentDir = join(COMPONENTS_PATH, componentName);
   if (existsSync(existingComponentDir)) {
     console.error(`\n⚠️  Component "${componentName}" already exists at:`);
     console.error(`   ${existingComponentDir}`);
-    console.error(`\n   Use a different name or delete the existing component first.`);
     process.exit(1);
   }
 
-  // Find all .d.ts files in the component directory
   const dtsFiles = readdirSync(componentDir).filter((f) => f.endsWith('.d.ts'));
-
   if (dtsFiles.length === 0) {
     console.error(`No .d.ts files found in ${componentDir}`);
     process.exit(1);
@@ -140,88 +176,48 @@ async function main() {
   console.log(`\n📦 Component: ${componentName}`);
   console.log(`🏷️  Tag: <${tagName}>`);
   console.log(`🎨 CSS: .ant-${cssPrefix} ${cssExists ? '✓' : '⚠️ not found'}`);
-  console.log(`📁 Path: ${componentDir}`);
+  console.log(`📁 Source: ${componentDir}`);
   console.log(`📄 Files: ${dtsFiles.join(', ')}\n`);
 
-  if (!cssExists) {
-    console.log(`⚠️  CSS file not found: ${cssFile}`);
-    console.log(`   Run 'bun run build:tokens' first or check if component uses shared CSS.\n`);
-  }
-
-  // Read and combine all .d.ts content
-  let allContent = '';
-  for (const file of dtsFiles) {
-    const content = readFileSync(join(componentDir, file), 'utf-8');
-    allContent += content + '\n';
-  }
-
-  // Extract types
-  const types = extractTypes(allContent);
-
-  if (types.size > 0) {
-    console.log('═══════════════════════════════════════════════════════════');
-    console.log('📋 EXTRACTED TYPES (copy to your component)');
-    console.log('═══════════════════════════════════════════════════════════\n');
-
-    for (const [typeName, values] of types) {
-      console.log(`export type ${typeName} = ${values.map((v) => `'${v}'`).join(' | ')};`);
-    }
-    console.log('');
-  }
-
-  // Show main .d.ts file content for manual review
+  // Show main .d.ts content
   const mainFile = `${capitalize(componentName)}.d.ts`;
   const fallbackFile = 'index.d.ts';
-  const fileToShow = dtsFiles.includes(mainFile) ? mainFile : dtsFiles.includes(fallbackFile) ? fallbackFile : null;
+  const fileToShow = dtsFiles.includes(mainFile) ? mainFile : dtsFiles.includes(fallbackFile) ? fallbackFile : dtsFiles[0];
 
   if (fileToShow) {
-    const mainContent = readFileSync(join(componentDir, fileToShow), 'utf-8');
-
+    const content = readFileSync(join(componentDir, fileToShow), 'utf-8');
     console.log('═══════════════════════════════════════════════════════════');
-    console.log(`📖 ${fileToShow} (review for props, methods, events)`);
+    console.log(`📖 ${fileToShow}`);
     console.log('═══════════════════════════════════════════════════════════\n');
-    console.log(mainContent);
+    console.log(content);
   }
 
-  // Show helper file if exists
-  const helperFile = `${componentName}Helpers.d.ts`;
-  if (dtsFiles.includes(helperFile)) {
-    const helperContent = readFileSync(join(componentDir, helperFile), 'utf-8');
+  // Generate component
+  const className = capitalize(componentName);
+  const outputDir = join(COMPONENTS_PATH, componentName);
+  const outputFile = join(outputDir, `${componentName}.tsx`);
 
-    console.log('\n═══════════════════════════════════════════════════════════');
-    console.log(`📖 ${helperFile}`);
-    console.log('═══════════════════════════════════════════════════════════\n');
-    console.log(helperContent);
-  }
+  const absoluteDtsPath = fileToShow ? join(componentDir, fileToShow) : componentDir;
+  const relativeDtsPath = relative(outputDir, absoluteDtsPath).replace(/\\/g, '/');
+  const componentCode = generateComponent(className, tagName, cssPrefix, relativeDtsPath);
 
-  console.log('\n═══════════════════════════════════════════════════════════');
-  console.log('📝 PORTING CHECKLIST');
+  mkdirSync(outputDir, { recursive: true });
+  writeFileSync(outputFile, componentCode, 'utf-8');
+
   console.log('═══════════════════════════════════════════════════════════');
-  console.log(`
-1. CREATE FILE:
-   mkdir packages/core/src/components/${componentName}
-   → ${componentName}.tsx
+  console.log('✅ COMPONENT CREATED');
+  console.log('═══════════════════════════════════════════════════════════\n');
+  console.log(`📁 ${outputFile}\n`);
 
-2. COMPONENT SETUP:
-   @Component({ tag: '${tagName}', shadow: false })
-   export class ${capitalize(componentName)} { ... }
-
-3. PROPS to @Prop():
-   - Look for interface ${capitalize(componentName)}Props
-   - Skip: children, className, style, prefixCls, rootClassName, classNames, styles
-   - ReactNode props → <slot name="xxx">
-
-4. EVENTS to @Event():
-   - onChange → ${componentName}Change
-   - onClick → ${componentName}Click
-
-5. METHODS to @Method():
-   - Look for ref methods (focus, blur, etc.)
-
-6. BUILD & TEST:
-   bun run build:core
-   bun run dev
-`);
+  console.log('📝 NEXT STEPS:');
+  console.log(`   1. Open ${componentName}/${componentName}.tsx`);
+  console.log(`   2. Ctrl+click the reference path to view .d.ts`);
+  console.log('   3. Replace __ELEMENT__ with correct HTML tag (button, div, etc.)');
+  console.log('   4. Update @Prop() declarations from the interface');
+  console.log('   5. Update @Event() and handlers as needed');
+  console.log('   6. Update @Method() for imperative APIs');
+  console.log('   7. Update getClassString() with component-specific classes');
+  console.log('   8. Run: bun run build:core\n');
 }
 
 main().catch(console.error);

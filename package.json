@@ -5,13 +5,19 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "bun --filter '*' dev",
+    "dev": "bun --filter '@hero-antd/docs' dev",
+    "dev:all": "bun --filter '*' dev",
+    "dev:core": "bun --filter '@hero-antd/core' dev",
     "dev:tokens": "bun --filter '@hero-antd/tokens' dev",
     "build": "bun --filter '*' build",
+    "build:core": "bun --filter '@hero-antd/core' build",
     "build:tokens": "bun --filter '@hero-antd/tokens' build",
-    "test": "bun --filter '*' test"
+    "build:docs": "bun --filter '@hero-antd/docs' build",
+    "test": "bun --filter '*' test",
+    "scaffold": "bun --filter '@hero-antd/core' scaffold"
   },
   "devDependencies": {
+    "@types/bun": "^1.3.5",
     "typescript": "^5.9.3"
   }
 }

@@ -11,6 +11,9 @@
   "files": [
     "dist/"
   ],
+  "sideEffects": [
+    "**/*.css"
+  ],
   "scripts": {
     "dev": "bun run build --watch",
     "build": "bun run index.ts"

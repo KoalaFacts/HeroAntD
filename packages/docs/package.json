@@ -4,15 +4,28 @@
   "private": true,
   "description": "Documentation and demo site for Hero AntD",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "dev": "storybook dev -p 6006",
+    "build": "storybook build -o dist",
+    "preview": "npx serve dist"
   },
   "dependencies": {
-    "@hero-antd/core": "workspace:*"
+    "@hero-antd/core": "workspace:*",
+    "@hero-antd/tokens": "workspace:*"
   },
   "devDependencies": {
-    "vite": "^8.0.0-beta.5"
+    "@chromatic-com/storybook": "^4.1.3",
+    "@storybook/addon-a11y": "^10.1.11",
+    "@storybook/addon-docs": "^10.1.11",
+    "@storybook/addon-themes": "^10.1.11",
+    "@storybook/addon-vitest": "^10.1.11",
+    "@storybook/web-components-vite": "^10.1.11",
+    "@vitest/browser-playwright": "^4.0.16",
+    "@vitest/coverage-v8": "^4.0.16",
+    "lit": "^3.3.2",
+    "playwright": "^1.57.0",
+    "storybook": "^10.1.11",
+    "vite": "^8.0.0-beta.5",
+    "vitest": "^4.0.16"
   },
   "license": "MIT"
 }

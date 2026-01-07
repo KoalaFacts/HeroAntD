@@ -17,8 +17,9 @@
     "outDir": "dist",
     "skipLibCheck": true,
     "strict": true,
-    "target": "ES2022"
+    "target": "ES2022",
+    "types": ["bun"]
   },
-  "include": ["src"],
+  "include": ["src", "scripts"],
   "exclude": ["node_modules"]
 }

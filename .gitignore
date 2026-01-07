@@ -82,6 +82,14 @@ out
 .nuxt
 dist
 
+# Stencil
+.stencil/
+www/
+loader/
+
+# Build output
+generated/
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and not Next.js
@@ -133,6 +141,9 @@ dist
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# Bun
+.bun/
 
 # Vite logs files
 vite.config.js.timestamp-*

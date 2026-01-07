@@ -1,24 +1,5 @@
 /**
- * Ant Design v6 Design Tokens & Component CSS Extractor
- *
- * Run: bun run build
- *
- * Outputs to ./dist/:
- * - index.css              (Entry point with imports)
- * - base.css               (Reset & global styles)
- * - dark.css               (Dark theme entry point)
- * - compact.css            (Compact theme entry point)
- * - tokens/
- *   - light-tokens.css     (CSS vars for :root)
- *   - light-tokens.json    (JSON for tooling)
- *   - dark-tokens.css      ([data-theme="dark"])
- *   - dark-tokens.json
- *   - compact-tokens.css   ([data-theme="compact"])
- *   - compact-tokens.json
- * - components/
- *   - button.css           (Individual component CSS)
- *   - input.css
- *   - ...
+* This script extracts design tokens and component CSS from Ant Design v6,
  */
 
 import { rm, mkdir } from "fs/promises";
@@ -33,7 +14,7 @@ import {
 } from "./scripts/generate-index";
 
 async function cleanOutputDir(): Promise<void> {
-  console.log("  Cleaning output directory...");
+  console.log(`  Cleaning output directory '${OUTPUT_DIR}': ...`);
   await rm(OUTPUT_DIR, { recursive: true, force: true });
   await mkdir(OUTPUT_DIR, { recursive: true });
   await mkdir(`${OUTPUT_DIR}/tokens`, { recursive: true });

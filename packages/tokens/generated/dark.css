@@ -1,6 +1,0 @@
-/**
- * Dark theme entry point
- * Import this after index.css to enable dark theme
- */
-
-@import "./tokens/dark-tokens.css";

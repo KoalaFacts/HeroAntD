@@ -1,6 +1,0 @@
-/**
- * Compact theme entry point
- * Import this after index.css to enable compact theme
- */
-
-@import "./tokens/compact-tokens.css";

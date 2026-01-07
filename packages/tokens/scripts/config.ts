@@ -5,7 +5,7 @@
 import * as antd from "antd";
 
 // Output directory for generated files
-export const OUTPUT_DIR = "./generated";
+export const OUTPUT_DIR = "./dist";
 
 // Component name to CSS class prefix mapping
 // AntD uses abbreviated or different class names for some components

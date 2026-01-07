@@ -1,0 +1,5 @@
+.placeholder {
+  font-family: var(--ant-font-family, sans-serif);
+  padding: var(--ant-padding, 16px);
+  color: var(--ant-color-text, #000);
+}

@@ -1,6 +1,6 @@
 {
   "name": "@hero-antd/core",
-  "version": "6.0.1",
+  "version": "6.1.4",
   "description": "Web Components UI library for Ant Design V6",
   "main": "dist/index.cjs.js",
   "module": "dist/index.js",
@@ -28,8 +28,7 @@
     "test": "stencil test --spec",
     "test:watch": "stencil test --spec --watchAll",
     "test:e2e": "stencil test --e2e",
-    "generate": "stencil generate",
-    "lint": "eslint src/**/*.{ts,tsx}"
+    "generate": "stencil generate"
   },
   "dependencies": {
     "@hero-antd/tokens": "workspace:*"

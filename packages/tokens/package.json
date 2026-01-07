@@ -3,13 +3,13 @@
   "version": "6.1.4",
   "description": "Ant Design V6 design tokens for Web Components",
   "exports": {
-    ".": "./generated/index.css",
-    "./*": "./generated/*",
-    "./tokens/*": "./generated/tokens/*",
-    "./components/*": "./generated/components/*"
+    ".": "./dist/index.css",
+    "./*": "./dist/*",
+    "./tokens/*": "./dist/tokens/*",
+    "./components/*": "./dist/components/*"
   },
   "files": [
-    "generated/"
+    "dist/"
   ],
   "scripts": {
     "dev": "bun run build --watch",

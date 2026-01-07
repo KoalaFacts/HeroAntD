@@ -82,11 +82,6 @@ out
 .nuxt
 dist
 
-# Stencil
-.stencil/
-www/
-loader/
-
 # Build output
 generated/
 

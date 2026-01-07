@@ -63,7 +63,10 @@ function convertTypeToColorVariant(type?: ButtonType): {
 @Component({
   tag: 'ant-btn',
   shadow: false,
-  styleUrl: '~@hero-antd/tokens/dist/components/btn.css',
+  styleUrls: [
+    '~@hero-antd/tokens/dist/components/btn.css',
+    '~@hero-antd/tokens/dist/components/wave.css',
+  ],
 })
 export class Button {
   @Element() el!: HTMLElement;
@@ -179,6 +182,39 @@ export class Button {
 
   private hasIcon = false;
   private hasContent = false;
+
+  /**
+   * Show wave effect using direct DOM manipulation (like React version)
+   * Creates a wave element, appends it, and removes after animation
+   */
+  private showWave() {
+    const target = this.buttonRef;
+    if (!target) return;
+
+    // Skip for link/text variants
+    const effectiveVariant = this.variant || convertTypeToColorVariant(this.type).variant;
+    if (effectiveVariant === 'link' || effectiveVariant === 'text') return;
+
+    // Create wave element
+    const wave = document.createElement('span');
+    wave.className = 'ant-wave';
+
+    // Insert at beginning of button (like React does)
+    target.insertBefore(wave, target.firstChild);
+
+    // Remove after animation completes
+    wave.addEventListener('animationend', () => {
+      wave.remove();
+    });
+  }
+
+  /**
+   * Handle click - triggers wave effect
+   */
+  private handleClick = () => {
+    if (this.disabled || this.loading) return;
+    this.showWave();
+  };
 
   /**
    * Check if slotted content exists
@@ -302,6 +338,7 @@ export class Button {
             href={this.href}
             target={this.target}
             ref={(el?: HTMLAnchorElement) => (this.buttonRef = el)}
+            onClick={this.handleClick}
           >
             {innerContent}
           </a>
@@ -317,6 +354,7 @@ export class Button {
           disabled={isDisabled}
           aria-disabled={isDisabled ? 'true' : undefined}
           ref={(el?: HTMLButtonElement) => (this.buttonRef = el)}
+          onClick={this.handleClick}
         >
           {innerContent}
         </button>

@@ -2,11 +2,12 @@
  * Generate base.css with reset and global styles using Ant Design tokens
  */
 
-import { join } from "path";
-import { writeFile } from "fs/promises";
-import { Biome } from "@biomejs/js-api/nodejs";
-import { OUTPUT_DIR } from "./config";
-import { formatSize } from "./helpers";
+import { Biome } from '@biomejs/js-api/nodejs';
+import { readFile, writeFile } from 'fs/promises';
+import { join } from 'path';
+import { OUTPUT_DIR } from './config';
+import { extractKeyframesFromCss } from './extract-css';
+import { formatSize } from './helpers';
 
 // Biome formatter instance
 let biome: Biome | null = null;
@@ -20,13 +21,13 @@ async function initBiome(): Promise<void> {
     biome.applyConfiguration(projectKey, {
       formatter: {
         enabled: true,
-        indentStyle: "space",
+        indentStyle: 'space',
         indentWidth: 2,
       },
       css: {
         formatter: {
           enabled: true,
-          indentStyle: "space",
+          indentStyle: 'space',
           indentWidth: 2,
         },
       },
@@ -43,26 +44,11 @@ function formatCss(css: string, fileName: string): string {
   }
 }
 
-const BASE_CSS = `/**
- * Base styles for Ant Design Web Components
- * Reset and global styles using design tokens
+/**
+ * Token-based enhancements applied on top of Ant Design's reset.css
  */
-
-/* Box sizing reset */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-/* Remove default margin and padding */
-html,
-body {
-  margin: 0;
-  padding: 0;
-}
-
-/* Base body styles using Ant Design tokens */
+const TOKEN_ENHANCEMENTS = `
+/* Token-based body styles */
 body {
   font-family: var(--ant-font-family);
   font-size: var(--ant-font-size);
@@ -73,52 +59,9 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Typography reset */
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-weight: var(--ant-font-weight-strong);
-  color: var(--ant-color-text-heading);
-}
-
-h1 {
-  font-size: var(--ant-font-size-heading-1);
-  line-height: var(--ant-line-height-heading-1);
-}
-
-h2 {
-  font-size: var(--ant-font-size-heading-2);
-  line-height: var(--ant-line-height-heading-2);
-}
-
-h3 {
-  font-size: var(--ant-font-size-heading-3);
-  line-height: var(--ant-line-height-heading-3);
-}
-
-h4 {
-  font-size: var(--ant-font-size-heading-4);
-  line-height: var(--ant-line-height-heading-4);
-}
-
-h5 {
-  font-size: var(--ant-font-size-heading-5);
-  line-height: var(--ant-line-height-heading-5);
-}
-
-p {
-  margin: 0 0 var(--ant-margin) 0;
-}
-
-/* Link styles */
+/* Link styles using tokens */
 a {
   color: var(--ant-color-link);
-  text-decoration: none;
-  cursor: pointer;
   transition: color var(--ant-motion-duration-mid);
 }
 
@@ -130,42 +73,7 @@ a:active {
   color: var(--ant-color-link-active);
 }
 
-/* List reset */
-ul,
-ol {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-/* Image reset */
-img {
-  max-width: 100%;
-  height: auto;
-  vertical-align: middle;
-}
-
-/* Table reset */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* Form elements reset */
-input,
-button,
-textarea,
-select {
-  font-family: inherit;
-  font-size: inherit;
-  line-height: inherit;
-}
-
-button {
-  cursor: pointer;
-}
-
-/* Focus visible outline */
+/* Focus visible outline using tokens */
 :focus-visible {
   outline: var(--ant-line-width-focus) solid var(--ant-color-primary-border);
   outline-offset: 1px;
@@ -176,29 +84,10 @@ button {
   outline: none;
 }
 
-/* Selection color */
+/* Selection color using tokens */
 ::selection {
   background-color: var(--ant-color-primary-bg);
   color: var(--ant-color-text);
-}
-
-/* Scrollbar styling (webkit) */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: var(--ant-color-bg-container);
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--ant-color-border);
-  border-radius: var(--ant-border-radius);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--ant-color-border-secondary);
 }
 
 /* Utility: visually hidden */
@@ -213,6 +102,33 @@ button {
   white-space: nowrap;
   border: 0;
 }
+
+/* Base anticon styles (from @ant-design/icons CSS-in-JS) */
+.anticon {
+  display: inline-flex;
+  align-items: center;
+  color: inherit;
+  font-style: normal;
+  line-height: 0;
+  text-align: center;
+  text-transform: none;
+  vertical-align: -0.125em;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.anticon > * {
+  line-height: 1;
+}
+
+.anticon svg {
+  display: inline-block;
+}
+
+.anticon::before {
+  display: none;
+}
 `;
 
 /**
@@ -221,8 +137,27 @@ button {
 export async function generateBaseCss(): Promise<void> {
   await initBiome();
 
-  const formattedCss = formatCss(BASE_CSS, "base.css");
-  const outputPath = join(OUTPUT_DIR, "base.css");
+  // Read Ant Design's official reset.css
+  const antdResetPath = join(process.cwd(), 'node_modules/antd/dist/reset.css');
+  const antdReset = await readFile(antdResetPath, 'utf-8');
+
+  // Extract keyframes from Ant Design CSS-in-JS
+  const keyframes = extractKeyframesFromCss();
+
+  // Combine: Ant Design reset + token enhancements + keyframes
+  const fullCss = `/**
+ * Base styles for Ant Design Web Components
+ * - Reset from antd/dist/reset.css
+ * - Token-based enhancements
+ * - Keyframe animations extracted from Ant Design
+ */
+
+${antdReset}
+${TOKEN_ENHANCEMENTS}
+${keyframes}`;
+
+  const formattedCss = formatCss(fullCss, 'base.css');
+  const outputPath = join(OUTPUT_DIR, 'base.css');
   await writeFile(outputPath, formattedCss);
 
   console.log(`    base.css (${formatSize(formattedCss.length)})`);

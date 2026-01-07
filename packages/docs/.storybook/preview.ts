@@ -1,14 +1,17 @@
-import type { Preview } from '@storybook/web-components-vite';
 import { withThemeByDataAttribute } from '@storybook/addon-themes';
+import type { Preview } from '@storybook/web-components-vite';
 
-// Import Ant Design tokens and styles
-import '@hero-antd/tokens';
+// Import foundation styles from core (base reset + light theme tokens)
+// Component CSS is bundled with each component via shadow DOM
+import '@hero-antd/core/styles.css';
+
+// Import theme variants for dark/compact mode switching
 import '@hero-antd/tokens/dark.css';
 import '@hero-antd/tokens/compact.css';
 
 // Register Stencil web components globally
 import { defineCustomElements } from '@hero-antd/core/loader';
-defineCustomElements();
+import { defineCustomElements as defineIconElements } from '@hero-antd/icons/loader';
 
 const preview: Preview = {
   parameters: {
@@ -35,6 +38,13 @@ const preview: Preview = {
       defaultTheme: 'light',
       attributeName: 'data-theme',
     }),
+  ],
+  // Use loaders to ensure components are registered before stories render
+  loaders: [
+    async () => {
+      await Promise.all([defineCustomElements(), defineIconElements()]);
+      return {};
+    },
   ],
 };
 

@@ -152,3 +152,7 @@ nul
 NUL
 *storybook.log
 storybook-static
+
+# Generated icons (regenerate with: bun run generate:icons)
+packages/icons/src/generated/
+

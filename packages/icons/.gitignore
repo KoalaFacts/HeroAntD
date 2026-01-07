@@ -1,0 +1,5 @@
+# Stencil generated
+.stencil/
+www/
+loader/
+src/components.d.ts

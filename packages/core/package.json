@@ -13,11 +13,16 @@
       "import": "./dist/hero-antd/hero-antd.esm.js",
       "require": "./dist/hero-antd/hero-antd.cjs.js"
     },
+    "./styles": "./dist/hero-antd/hero-antd.css",
+    "./styles.css": "./dist/hero-antd/hero-antd.css",
     "./loader": {
       "import": "./loader/index.js",
       "require": "./loader/index.cjs"
     }
   },
+  "sideEffects": [
+    "**/*.css"
+  ],
   "files": [
     "dist/",
     "loader/"
@@ -32,11 +37,14 @@
     "scaffold": "bun run scripts/scaffold.ts"
   },
   "dependencies": {
+    "@hero-antd/icons": "workspace:*",
     "@hero-antd/tokens": "workspace:*"
   },
   "devDependencies": {
     "@stencil/core": "^4.41.0",
-    "@types/bun": "^1.3.5"
+    "@stencil/sass": "^3.2.3",
+    "@types/bun": "^1.3.5",
+    "rollup": "^4.55.1"
   },
   "license": "MIT"
 }

@@ -1,90 +1,159 @@
 /**
- * Generate index.css entry point with all imports
+ * Generate CSS entry points
  */
 
-import { join } from "path";
-import { readdir, writeFile } from "fs/promises";
-import { OUTPUT_DIR } from "./config";
-import { formatSize } from "./helpers";
+import { readdir, readFile, writeFile } from 'fs/promises';
+import { join } from 'path';
+import { OUTPUT_DIR } from './config';
+import { formatSize } from './helpers';
 
 /**
- * Generate index.css with imports for all CSS files
+ * Generate index.css - Foundation styles only (base + light tokens)
+ * This is the minimal CSS needed for theming - component CSS is separate
  */
 export async function generateIndexCss(): Promise<void> {
-  const componentsDir = join(OUTPUT_DIR, "components");
+  const tokensDir = join(OUTPUT_DIR, 'tokens');
 
-  // Get all component CSS files
-  let componentFiles: string[] = [];
+  const sections: string[] = [
+    '/**',
+    ' * Ant Design Foundation Styles',
+    ' * Base reset + Light theme tokens (CSS variables)',
+    ' * Import component CSS separately for tree-shaking',
+    ' */',
+    '',
+  ];
+
+  // Read and inline light tokens
+  try {
+    const lightTokens = await readFile(join(tokensDir, 'light-tokens.css'), 'utf-8');
+    sections.push('/* ========== Design Tokens (Light Theme) ========== */');
+    sections.push(lightTokens);
+    sections.push('');
+  } catch {
+    // Tokens file might not exist yet
+  }
+
+  // Read and inline base.css
+  try {
+    const baseCss = await readFile(join(OUTPUT_DIR, 'base.css'), 'utf-8');
+    sections.push('/* ========== Base/Reset Styles ========== */');
+    sections.push(baseCss);
+    sections.push('');
+  } catch {
+    // Base file might not exist yet
+  }
+
+  const content = sections.join('\n');
+  const outputPath = join(OUTPUT_DIR, 'index.css');
+  await writeFile(outputPath, content);
+
+  console.log(`    index.css (${formatSize(content.length)}) - foundation only`);
+}
+
+/**
+ * Generate all.css - Everything bundled (foundation + all components)
+ * For convenience when tree-shaking is not needed
+ */
+export async function generateAllCss(): Promise<void> {
+  const componentsDir = join(OUTPUT_DIR, 'components');
+  const tokensDir = join(OUTPUT_DIR, 'tokens');
+
+  const sections: string[] = [
+    '/**',
+    ' * Ant Design Web Components - All Styles Bundled',
+    ' * Includes foundation + all component CSS',
+    ' */',
+    '',
+  ];
+
+  // Read and inline light tokens
+  try {
+    const lightTokens = await readFile(join(tokensDir, 'light-tokens.css'), 'utf-8');
+    sections.push('/* ========== Design Tokens (Light Theme) ========== */');
+    sections.push(lightTokens);
+    sections.push('');
+  } catch {
+    // Tokens file might not exist yet
+  }
+
+  // Read and inline base.css
+  try {
+    const baseCss = await readFile(join(OUTPUT_DIR, 'base.css'), 'utf-8');
+    sections.push('/* ========== Base/Reset Styles ========== */');
+    sections.push(baseCss);
+    sections.push('');
+  } catch {
+    // Base file might not exist yet
+  }
+
+  // Read and inline all component CSS files
   try {
     const files = await readdir(componentsDir);
-    componentFiles = files
-      .filter((f) => f.endsWith(".css"))
-      .sort();
+    const componentFiles = files.filter((f) => f.endsWith('.css')).sort();
+
+    if (componentFiles.length > 0) {
+      sections.push('/* ========== Component Styles ========== */');
+      for (const file of componentFiles) {
+        const css = await readFile(join(componentsDir, file), 'utf-8');
+        sections.push(css);
+      }
+    }
   } catch {
     // Components directory might not exist yet
   }
 
-  const lines: string[] = [
-    "/**",
-    " * Ant Design Web Components - Main Entry Point",
-    " * Import this file to include all styles",
-    " */",
-    "",
-    "/* Design Tokens (light theme by default) */",
-    '@import "./tokens/light-tokens.css";',
-    "",
-    "/* Base/Reset Styles */",
-    '@import "./base.css";',
-    "",
-  ];
+  sections.push('');
 
-  if (componentFiles.length > 0) {
-    lines.push("/* Component Styles */");
-    for (const file of componentFiles) {
-      lines.push(`@import "./components/${file}";`);
-    }
-  }
-
-  lines.push("");
-
-  const content = lines.join("\n");
-  const outputPath = join(OUTPUT_DIR, "index.css");
+  const content = sections.join('\n');
+  const outputPath = join(OUTPUT_DIR, 'all.css');
   await writeFile(outputPath, content);
 
-  console.log(`    index.css (${formatSize(content.length)})`);
+  console.log(`    all.css (${formatSize(content.length)}) - everything bundled`);
 }
 
 /**
- * Generate dark theme index.css
+ * Generate dark theme CSS (inlined for bundler compatibility)
  */
 export async function generateDarkIndexCss(): Promise<void> {
-  const content = `/**
- * Dark theme entry point
- * Import this after index.css to enable dark theme
- */
+  const tokensDir = join(OUTPUT_DIR, 'tokens');
 
-@import "./tokens/dark-tokens.css";
+  let content = `/**
+ * Dark theme - Import after foundation to enable dark mode
+ */
 `;
 
-  const outputPath = join(OUTPUT_DIR, "dark.css");
+  try {
+    const darkTokens = await readFile(join(tokensDir, 'dark-tokens.css'), 'utf-8');
+    content += darkTokens;
+  } catch {
+    // File might not exist yet
+  }
+
+  const outputPath = join(OUTPUT_DIR, 'dark.css');
   await writeFile(outputPath, content);
 
   console.log(`    dark.css (${formatSize(content.length)})`);
 }
 
 /**
- * Generate compact theme index.css
+ * Generate compact theme CSS (inlined for bundler compatibility)
  */
 export async function generateCompactIndexCss(): Promise<void> {
-  const content = `/**
- * Compact theme entry point
- * Import this after index.css to enable compact theme
- */
+  const tokensDir = join(OUTPUT_DIR, 'tokens');
 
-@import "./tokens/compact-tokens.css";
+  let content = `/**
+ * Compact theme - Import after foundation to enable compact mode
+ */
 `;
 
-  const outputPath = join(OUTPUT_DIR, "compact.css");
+  try {
+    const compactTokens = await readFile(join(tokensDir, 'compact-tokens.css'), 'utf-8');
+    content += compactTokens;
+  } catch {
+    // File might not exist yet
+  }
+
+  const outputPath = join(OUTPUT_DIR, 'compact.css');
   await writeFile(outputPath, content);
 
   console.log(`    compact.css (${formatSize(content.length)})`);

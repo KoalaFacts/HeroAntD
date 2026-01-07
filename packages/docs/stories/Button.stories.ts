@@ -14,8 +14,22 @@ const meta: Meta = {
     color: {
       control: 'select',
       options: [
-        'default', 'primary', 'danger', 'blue', 'purple', 'cyan', 'green',
-        'magenta', 'pink', 'red', 'orange', 'yellow', 'volcano', 'geekblue', 'lime', 'gold',
+        'default',
+        'primary',
+        'danger',
+        'blue',
+        'purple',
+        'cyan',
+        'green',
+        'magenta',
+        'pink',
+        'red',
+        'orange',
+        'yellow',
+        'volcano',
+        'geekblue',
+        'lime',
+        'gold',
       ],
       description: 'Button color',
     },
@@ -26,7 +40,7 @@ const meta: Meta = {
     },
     shape: {
       control: 'select',
-      options: ['default', 'circle', 'round', 'square'],
+      options: ['default', 'circle', 'round'],
       description: 'Button shape',
       table: { defaultValue: { summary: 'default' } },
     },
@@ -131,7 +145,6 @@ export const Shapes: Story = {
       <ant-btn type="primary">Default</ant-btn>
       <ant-btn type="primary" shape="round">Round</ant-btn>
       <ant-btn type="primary" shape="circle">A</ant-btn>
-      <ant-btn type="primary" shape="square">B</ant-btn>
     </div>
   `,
 };
@@ -248,7 +261,7 @@ export const IconAtEnd: Story = {
     <ant-btn type="primary" icon-placement="end">
       Next
       <svg slot="icon" viewBox="64 64 896 896" width="1em" height="1em" fill="currentColor">
-        <path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V k883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"></path>
+        <path d="M765.7 486.8L314.9 134.7A7.97 7.97 0 00302 141v77.3c0 4.9 2.3 9.6 6.1 12.6l360 281.1-360 281.1c-3.9 3-6.1 7.7-6.1 12.6V883c0 6.7 7.7 10.4 12.9 6.3l450.8-352.1a31.96 31.96 0 000-50.4z"></path>
       </svg>
     </ant-btn>
   `,

@@ -4,9 +4,14 @@
   "description": "Ant Design V6 design tokens for Web Components",
   "exports": {
     ".": "./dist/index.css",
-    "./*": "./dist/*",
-    "./tokens/*": "./dist/tokens/*",
-    "./components/*": "./dist/components/*"
+    "./all": "./dist/all.css",
+    "./all.css": "./dist/all.css",
+    "./dark": "./dist/dark.css",
+    "./dark.css": "./dist/dark.css",
+    "./compact": "./dist/compact.css",
+    "./compact.css": "./dist/compact.css",
+    "./components/*": "./dist/components/*",
+    "./tokens/*": "./dist/tokens/*"
   },
   "files": [
     "dist/"

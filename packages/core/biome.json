@@ -1,0 +1,19 @@
+{
+  "root": false,
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+  "extends": ["../../biome.json"],
+  "overrides": [
+    {
+      "includes": ["**/components.d.ts", "**/loader/**", "**/.stencil/**", "**/www/**"],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      },
+      "assist": {
+        "enabled": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.3.11/schema.json",
+  "assist": {
+    "actions": {
+      "source": {
+        "organizeImports": "on"
+      }
+    }
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "complexity": {
+        "noForEach": "off",
+        "noUselessSwitchCase": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noAssignInExpressions": "off"
+      },
+      "correctness": {
+        "noUnusedImports": "off",
+        "noUnusedVariables": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "useImportType": "error",
+        "useNodejsImportProtocol": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "trailingCommas": "es5",
+      "semicolons": "always"
+    }
+  },
+  "json": {
+    "formatter": {
+      "indentWidth": 2
+    }
+  },
+  "files": {
+    "includes": ["**/*.ts", "**/*.tsx", "**/*.js", "**/*.json"]
+  },
+  "overrides": [
+    {
+      "includes": ["**/dist/**", "**/generated/**", "**/node_modules/**"],
+      "linter": {
+        "enabled": false
+      },
+      "formatter": {
+        "enabled": false
+      },
+      "assist": {
+        "enabled": false
+      }
+    }
+  ]
+}

@@ -3,15 +3,14 @@
  * Extracts design tokens for light, dark, and compact themes
  */
 
-import { join } from "path";
-import { mkdir, writeFile } from "fs/promises";
-import { theme } from "antd";
-import { Biome } from "@biomejs/js-api/nodejs";
-import { OUTPUT_DIR } from "./config";
-import { formatSize } from "./helpers";
+import { Biome } from '@biomejs/js-api/nodejs';
+import { theme } from 'antd';
+import { mkdir, writeFile } from 'fs/promises';
+import { join } from 'path';
+import { OUTPUT_DIR } from './config';
+import { formatSize } from './helpers';
 
-const { defaultAlgorithm, darkAlgorithm, compactAlgorithm, defaultSeed } =
-  theme;
+const { defaultAlgorithm, darkAlgorithm, compactAlgorithm, defaultSeed } = theme;
 
 // Biome formatter instance
 let biome: Biome | null = null;
@@ -25,13 +24,13 @@ async function initBiome(): Promise<void> {
     biome.applyConfiguration(projectKey, {
       formatter: {
         enabled: true,
-        indentStyle: "space",
+        indentStyle: 'space',
         indentWidth: 2,
       },
       css: {
         formatter: {
           enabled: true,
-          indentStyle: "space",
+          indentStyle: 'space',
           indentWidth: 2,
         },
       },
@@ -53,8 +52,8 @@ function formatCss(css: string, fileName: string): string {
  */
 function toKebabCase(str: string): string {
   return str
-    .replace(/([a-z])([A-Z])/g, "$1-$2")
-    .replace(/([A-Z])([A-Z][a-z])/g, "$1-$2")
+    .replace(/([a-z])([A-Z])/g, '$1-$2')
+    .replace(/([A-Z])([A-Z][a-z])/g, '$1-$2')
     .toLowerCase();
 }
 
@@ -62,50 +61,50 @@ function toKebabCase(str: string): string {
  * Token names that should NOT have px units appended
  */
 const UNITLESS_TOKENS = new Set([
-  "zIndexBase",
-  "zIndexPopupBase",
-  "opacityLoading",
-  "opacityImage",
-  "lineHeight",
-  "lineHeightLG",
-  "lineHeightSM",
-  "lineHeightHeading1",
-  "lineHeightHeading2",
-  "lineHeightHeading3",
-  "lineHeightHeading4",
-  "lineHeightHeading5",
-  "fontWeightStrong",
-  "motionUnit",
-  "motionBase",
+  'zIndexBase',
+  'zIndexPopupBase',
+  'opacityLoading',
+  'opacityImage',
+  'lineHeight',
+  'lineHeightLG',
+  'lineHeightSM',
+  'lineHeightHeading1',
+  'lineHeightHeading2',
+  'lineHeightHeading3',
+  'lineHeightHeading4',
+  'lineHeightHeading5',
+  'fontWeightStrong',
+  'motionUnit',
+  'motionBase',
 ]);
 
 /**
  * Convert token value to CSS value
  */
 function toCssValue(value: unknown, key: string): string {
-  if (typeof value === "number") {
+  if (typeof value === 'number') {
     // Check if this token should be unitless
     if (UNITLESS_TOKENS.has(key)) {
       return String(value);
     }
     // z-index values
-    if (key.toLowerCase().includes("zindex")) {
+    if (key.toLowerCase().includes('zindex')) {
       return String(value);
     }
     // Opacity values
-    if (key.toLowerCase().includes("opacity")) {
+    if (key.toLowerCase().includes('opacity')) {
       return String(value);
     }
     // Line height values (usually ratios)
-    if (key.toLowerCase().includes("lineheight")) {
+    if (key.toLowerCase().includes('lineheight')) {
       return String(value);
     }
     // Font weight
-    if (key.toLowerCase().includes("fontweight")) {
+    if (key.toLowerCase().includes('fontweight')) {
       return String(value);
     }
     // Motion unit/base are multipliers
-    if (key === "motionUnit" || key === "motionBase") {
+    if (key === 'motionUnit' || key === 'motionBase') {
       return String(value);
     }
     // Everything else gets px
@@ -118,7 +117,11 @@ function toCssValue(value: unknown, key: string): string {
  * Generate tokens using Ant Design's theme algorithm
  */
 function generateTokens(
-  algorithm: typeof defaultAlgorithm | typeof darkAlgorithm | typeof compactAlgorithm | Array<typeof defaultAlgorithm | typeof darkAlgorithm | typeof compactAlgorithm>
+  algorithm:
+    | typeof defaultAlgorithm
+    | typeof darkAlgorithm
+    | typeof compactAlgorithm
+    | Array<typeof defaultAlgorithm | typeof darkAlgorithm | typeof compactAlgorithm>
 ): Record<string, unknown> {
   const algorithms = Array.isArray(algorithm) ? algorithm : [algorithm];
   return theme.getDesignToken({
@@ -130,19 +133,12 @@ function generateTokens(
 /**
  * Convert tokens to CSS custom properties
  */
-function tokensToCss(
-  tokens: Record<string, unknown>,
-  selector: string
-): string {
+function tokensToCss(tokens: Record<string, unknown>, selector: string): string {
   const lines: string[] = [`${selector} {`];
 
   for (const [key, value] of Object.entries(tokens)) {
     // Skip internal/complex tokens
-    if (
-      typeof value === "object" ||
-      typeof value === "function" ||
-      key.startsWith("_")
-    ) {
+    if (typeof value === 'object' || typeof value === 'function' || key.startsWith('_')) {
       continue;
     }
 
@@ -151,8 +147,8 @@ function tokensToCss(
     lines.push(`  ${cssVar}: ${cssValue};`);
   }
 
-  lines.push("}");
-  return lines.join("\n");
+  lines.push('}');
+  return lines.join('\n');
 }
 
 /**
@@ -162,11 +158,7 @@ function tokensToJson(tokens: Record<string, unknown>): Record<string, unknown> 
   const result: Record<string, unknown> = {};
 
   for (const [key, value] of Object.entries(tokens)) {
-    if (
-      typeof value === "object" ||
-      typeof value === "function" ||
-      key.startsWith("_")
-    ) {
+    if (typeof value === 'object' || typeof value === 'function' || key.startsWith('_')) {
       continue;
     }
     result[key] = value;
@@ -180,22 +172,22 @@ function tokensToJson(tokens: Record<string, unknown>): Record<string, unknown> 
  */
 const THEMES = [
   {
-    name: "light",
+    name: 'light',
     algorithm: defaultAlgorithm,
-    selector: ":root",
-    description: "Light theme (default)",
+    selector: ':root',
+    description: 'Light theme (default)',
   },
   {
-    name: "dark",
+    name: 'dark',
     algorithm: darkAlgorithm,
     selector: '[data-theme="dark"]',
-    description: "Dark theme",
+    description: 'Dark theme',
   },
   {
-    name: "compact",
+    name: 'compact',
     algorithm: compactAlgorithm,
     selector: '[data-theme="compact"]',
-    description: "Compact theme",
+    description: 'Compact theme',
   },
 ] as const;
 
@@ -203,12 +195,12 @@ const THEMES = [
  * Extract and write token files
  */
 export async function extractTokens(): Promise<void> {
-  const tokensDir = join(OUTPUT_DIR, "tokens");
+  const tokensDir = join(OUTPUT_DIR, 'tokens');
   await mkdir(tokensDir, { recursive: true });
 
   await initBiome();
 
-  console.log("  Extracting design tokens...\n");
+  console.log('  Extracting design tokens...\n');
 
   for (const themeConfig of THEMES) {
     const tokens = generateTokens(themeConfig.algorithm);
@@ -233,5 +225,5 @@ export async function extractTokens(): Promise<void> {
     );
   }
 
-  console.log("");
+  console.log('');
 }

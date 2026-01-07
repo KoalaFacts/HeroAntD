@@ -9,8 +9,8 @@
  * Example: bun run scaffold button
  */
 
-import { readFileSync, existsSync, readdirSync, mkdirSync, writeFileSync } from 'fs';
-import { join, dirname, relative } from 'path';
+import { existsSync, mkdirSync, readdirSync, readFileSync, writeFileSync } from 'fs';
+import { dirname, join, relative } from 'path';
 
 const ANTD_PATH = join(dirname(import.meta.path), '../../tokens/node_modules/antd/es');
 const COMPONENTS_PATH = join(dirname(import.meta.path), '../src/components');
@@ -39,7 +39,12 @@ function getCssPrefix(componentName: string): string {
   return CSS_PREFIX_MAP[lower] || lower;
 }
 
-function generateComponent(className: string, tagName: string, cssPrefix: string, dtsPath: string): string {
+function generateComponent(
+  className: string,
+  tagName: string,
+  cssPrefix: string,
+  dtsPath: string
+): string {
   return `import { Component, Prop, Event, EventEmitter, Method, Element, h, Host } from '@stencil/core';
 import type { } from '@/types/shared';
 
@@ -133,7 +138,7 @@ function listComponents() {
         row.push(dirs[idx].padEnd(18));
       }
     }
-    console.log('  ' + row.join(''));
+    console.log(`  ${row.join('')}`);
   }
 }
 
@@ -182,7 +187,11 @@ async function main() {
   // Show main .d.ts content
   const mainFile = `${capitalize(componentName)}.d.ts`;
   const fallbackFile = 'index.d.ts';
-  const fileToShow = dtsFiles.includes(mainFile) ? mainFile : dtsFiles.includes(fallbackFile) ? fallbackFile : dtsFiles[0];
+  const fileToShow = dtsFiles.includes(mainFile)
+    ? mainFile
+    : dtsFiles.includes(fallbackFile)
+      ? fallbackFile
+      : dtsFiles[0];
 
   if (fileToShow) {
     const content = readFileSync(join(componentDir, fileToShow), 'utf-8');
